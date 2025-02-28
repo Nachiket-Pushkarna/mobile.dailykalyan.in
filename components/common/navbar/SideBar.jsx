@@ -33,8 +33,8 @@ export const SideBar = ({ setActive }) => {
 
   const handleLogout = () => {
     localStorage?.clear();
-    router.push("/signup");
-    router.reload();
+    router.push("/login");
+    // router.reload();
     toast.success("Logout...");
   };
 
@@ -98,7 +98,7 @@ export const SideBar = ({ setActive }) => {
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
                     onClick={() => {
                       setActive(false);
-                      dispatch(setHeaderTitle("JODI PLAY"));
+                      dispatch(setHeaderTitle("DAILY KALYAN"));
                     }}
                   >
                     <item.Icon className="text-blue-600" />

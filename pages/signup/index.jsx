@@ -68,64 +68,71 @@ function Signup() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900 p-2 sm:p-4">
-      <div className="bg-gray-800 p-4 sm:p-8 rounded-xl shadow-xl max-w-lg w-full relative">
-        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 text-orange-500 cursor-pointer" onClick={router.back}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M14.5 4L6 12l8.5 8 1-1.5L9 12l4.5-6.5z"/>
-          </svg>
+    <div className="flex items-center justify-center min-h-[100dvh] bg-gray-900 px-4">
+      <div className="w-full max-w-lg bg-gray-800 rounded-xl shadow-xl overflow-hidden">
+        {/* Header with Back Button */}
+        <div className="relative flex items-center justify-center p-4 border-b border-gray-700">
+          <div className="absolute left-2 text-orange-500 cursor-pointer" onClick={router.back}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14.5 4L6 12l8.5 8 1-1.5L9 12l4.5-6.5z"/>
+            </svg>
+          </div>
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-orange-500">Sign Up</h3>
+            <p className="text-xs text-gray-400">Create Your Account</p>
+          </div>
         </div>
-        <div className="text-center mb-4 sm:mb-6">
-          <h3 className="text-2xl sm:text-3xl font-semibold text-orange-500">Sign Up</h3>
-          <p className="text-xs sm:text-sm text-gray-400">Create Your Account</p>
-        </div>
-        <div className="mb-4 sm:mb-6">
-          <Inputbox
-            onChange={(val) => handleChange("name", val, allData, setAllData, errors)}
-            value={allData.name}
-            error={errors.name}
-            className="mb-2 sm:mb-4"
-            label="Your Name"
-            placeholder="Enter Full Name"
-            labelClassName="text-orange-300"
-          />
-          <Inputbox
-            onChange={(val) => handleChange("mobile", val, allData, setAllData, errors)}
-            value={allData.mobile}
-            error={errors.mobile}
-            className="mb-2 sm:mb-4"
-            type="number"
-            label="Mobile Number"
-            placeholder="Enter 10 Digit Phone Number"
-            labelClassName="text-orange-300"
-          />
-          <Inputbox
-            onChange={(val) => handleChange("password", val, allData, setAllData, errors)}
-            error={errors.password}
-            value={allData.password}
-            className="mb-2 sm:mb-4"
-            label="Password"
-            placeholder="Enter Password"
-            type="password"
-            labelClassName="text-orange-300"
-          />
-        </div>
-        <div className="text-center">
-          <button
-            onClick={handleSubmit}
-            className="w-full py-2 sm:py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
-          >
-            Sign Up
-          </button>
-        </div>
-        <div className="my-2 sm:my-3 text-center">
-          <p onClick={() => router.push("/login")} className="text-xs sm:text-sm text-gray-400">Already have an account?</p>
-          <button
-            onClick={() => router.push("/login")}
-            className="w-full py-2 sm:py-3 mt-2 sm:mt-3 bg-transparent border-2 border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white focus:outline-none transition"
-          >
-            Login Here
-          </button>
+
+        {/* Form Section */}
+        <div className="p-6">
+          <div className="space-y-4">
+            <Inputbox
+              onChange={(val) => handleChange("name", val, allData, setAllData, errors)}
+              value={allData.name}
+              error={errors.name}
+              placeholder="Enter Full Name"
+              label="Full Name"
+              labelClassName="text-orange-300"
+            />
+            <Inputbox
+              onChange={(val) => handleChange("mobile", val, allData, setAllData, errors)}
+              value={allData.mobile}
+              error={errors.mobile}
+              type="number"
+              label="Mobile Number"
+              placeholder="Enter 10 Digit Phone Number"
+              labelClassName="text-orange-300"
+            />
+            <Inputbox
+              onChange={(val) => handleChange("password", val, allData, setAllData, errors)}
+              error={errors.password}
+              value={allData.password}
+              label="Password"
+              placeholder="Enter Password"
+              type="password"
+              labelClassName="text-orange-300"
+            />
+
+            {/* Action Buttons */}
+            <div className="space-y-4 pt-2">
+              <button
+                onClick={handleSubmit}
+                className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
+              >
+                Sign Up
+              </button>
+              
+              <div className="text-center">
+                <p className="text-sm text-gray-400 mb-2">Already have an account?</p>
+                <button
+                  onClick={() => router.push("/login")}
+                  className="w-full py-3 bg-transparent border border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white focus:outline-none transition"
+                >
+                  Login Here
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

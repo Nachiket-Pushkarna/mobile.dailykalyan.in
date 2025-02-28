@@ -18,12 +18,13 @@ import Swal from "sweetalert2";
 import ConditionalDownloadButton from "@/pages/ConditionalDownloadButton";
 import { FaDownload } from "react-icons/fa"; // Import Download Icon
 import ActionButtons from "./ActionButton";
+import Signup from "@/pages/signup";
+import Login from "@/pages/login";
 
 const HomeMain = () => {
+  // Group all useState hooks together at the top
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const modalVisibleDetails = getSetData("closeModal");
-
   const [data, setData] = useState({});
   const [datawl, setDatawl] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,9 +32,11 @@ const HomeMain = () => {
   const [loading, setLoading] = useState(false);
   const [SlidingText, setSlidingText] = useState(null);
   const [contactDetails, setContactDetailsData] = useState({});
+
+  // Other setup
+  const modalVisibleDetails = getSetData("closeModal");
   const router = useRouter();
   const query = router.query;
-
   const reduxData = useSelector((state) => state?.data);
   const { contact_details } = reduxData;
   const dispatch = useDispatch();
@@ -41,33 +44,27 @@ const HomeMain = () => {
   let info = data?.result || [];
   let infowl = datawl?.result || [];
 
+  // Group all useEffect hooks together
   useEffect(() => {
     const checkAuth = () => {
       const token = getSetData("token");
       setIsAuthenticated(!!token);
       setIsLoading(false);
     };
-
     checkAuth();
-  }, [router]);
+  }, []);
 
   useEffect(() => {
-    setModalVisible(!modalVisibleDetails);
-  }, [modalVisibleDetails]);
+    if (!isLoading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isLoading, isAuthenticated, router]);
 
-  const getContactData = () => {
-    ApiClient.getContactDetails()
-      .then((res) => {
-        if (res?.data?.data && res?.data?.data[0]) {
-          let data = res?.data?.data[0];
-          dispatch(setContactDetails(data));
-          setContactDetailsData(data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  useEffect(() => {
+    if (modalVisibleDetails !== undefined) {
+      setModalVisible(!modalVisibleDetails);
+    }
+  }, [modalVisibleDetails]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -79,19 +76,6 @@ const HomeMain = () => {
 
     getContactData();
   }, [isAuthenticated]);
-
-  // useEffect(() => {
-  //   if (query.welcomesound === "true" && audioRef.current) {
-  //     audioRef.current
-  //       .play()
-  //       .then(() => {
-  //         router.replace(router.pathname, undefined, { shallow: true });
-  //       })
-  //       .catch((error) => {
-  //         console.error("Audio playback failed:", error);
-  //       });
-  //   }
-  // }, [query.welcomesound, router]);
 
   useEffect(() => {
     if (query.transaction === "true") {
@@ -115,6 +99,20 @@ const HomeMain = () => {
       router.replace(newUrl, undefined, { shallow: true });
     }
   }, [query.transaction]);
+
+  const getContactData = () => {
+    ApiClient.getContactDetails()
+      .then((res) => {
+        if (res?.data?.data && res?.data?.data[0]) {
+          let data = res?.data?.data[0];
+          dispatch(setContactDetails(data));
+          setContactDetailsData(data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const fetchInfo = () => {
     setLoading(true);
@@ -654,7 +652,9 @@ const HomeMain = () => {
       )}
       {!isAuthenticated ? (
         <>
-          <div className="text-center">{renderGameswithoutlogin()}</div>
+          <div className="text-center">
+          {isAuthenticated ? renderGames() : <Login />}
+            </div>
           <Info />
         </>
       ) : (

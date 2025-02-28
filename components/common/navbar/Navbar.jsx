@@ -100,7 +100,7 @@ const Navbar = () => {
 
           {/* Header Title */}
           <Link
-            href="/"
+            href="/login"
             className="text-white font-bold text-lg"
             onClick={() => dispatch(setHeaderTitle(headerTitle))}
           >
